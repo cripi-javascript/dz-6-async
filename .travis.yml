@@ -12,3 +12,4 @@
     - "phantomjs qunit/addons/phantomjs/runner.js tests/modelTest.html"
     - "phantomjs qunit/addons/phantomjs/runner.js tests/collectionTest.html"
     - "phantomjs qunit/addons/phantomjs/runner.js tests/EventsTest.html"
+    - "phantomjs qunit/addons/phantomjs/runner.js tests/eventTest.html"

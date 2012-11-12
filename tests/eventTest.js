@@ -17,7 +17,7 @@ test("Testing inherits Event from Model", function () {
 test("Test for validate method", function () {
     "use strict";
 
-    var itm = new Event({name: "hello", start: new Date("2012-10-20 10:00:00")}),
+    var itm = new Event({name: "hello", start: new Date("2012/10/20 10:00:00")}),
         valide = itm.validate();
 
     ok(valide.name === "hello", "Passed!");

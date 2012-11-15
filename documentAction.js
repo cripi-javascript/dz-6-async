@@ -7,7 +7,9 @@
     var filterOption = "all";
     var sortOption = "without";
 
-    exports.initialise = function () {
+    document.body.addEventListener('load', initialise(), false);
+
+    function initialise() {
         asyncXHR('GET','http://localhost:8080/current-event.json', restoreState, null);
     }
 

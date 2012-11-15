@@ -2,13 +2,4 @@
  node_js:
     - "0.8"
     - "0.6"
- notifications:
-    email:
-        - yunniihi@gmail.com
- branches:
-  only:
-    - gh-pages
- script: phantomjs qunit/addons/phantomjs/runner.js tests/modelTest.html
-     phantomjs qunit/addons/phantomjs/runner.js tests/collectionTest.html
-     phantomjs qunit/addons/phantomjs/runner.js tests/EventsTest.html
-     phantomjs qunit/addons/phantomjs/runner.js tests/eventTest.html
+

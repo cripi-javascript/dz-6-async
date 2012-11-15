@@ -11,6 +11,31 @@
         asyncXHR('GET','http://localhost:8080/current-event.json', restoreState, null);
     }
 
+    /**
+    * Загружает свое состояние с сервера
+    * при отсутсвии соединения/страницы на сервере пытается подключиться через 5 минут снова
+    *
+*/
+    function restoreState(error, json) {
+
+        document.querySelector("#notify").style.visibility = 'hidden';
+
+        if (error === "error") {
+            document.querySelector("#notifyError").visibility = 'visible';
+            return;
+        }
+
+        var parseObject = JSON.parse(json);
+
+        for (var i=0; i < parseObject.length; i++) {
+            var newEvent = new Event(parseObject[i]).validate();
+            ListOfEvents = ListOfEvents.add(newEvent);
+        };
+
+        changeDocument("sort");
+        addListener();
+}
+
 /**
  * Добавляет новое событие в список. Если установлены опции фильтрации и сортировки 
  * - то располагает элменты на странице, в с-ии с ними
@@ -202,25 +227,5 @@
 
         button.addEventListener('click', preventDefault);
     }
-
-    function restoreState(error, json) {
-
-        document.querySelector("#notify").style.visibility = 'hidden';
-
-        if (error === "error") {
-            document.querySelector("#notifyError").visibility = 'visible';
-            return;
-        }
-
-        var parseObject = JSON.parse(json);
-
-        for (var i=0; i < parseObject.length; i++) {
-            var newEvent = new Event(parseObject[i]).validate();
-            ListOfEvents = ListOfEvents.add(newEvent);
-        };
-
-        changeDocument("sort");
-        addListener();
-}
 
 }(window));

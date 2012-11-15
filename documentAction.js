@@ -7,6 +7,10 @@
     var filterOption = "all";
     var sortOption = "without";
 
+    exports.initialise = function () {
+        asyncXHR('GET','http://localhost:8080/current-event.json', restoreState, null);
+    }
+
 /**
  * Добавляет новое событие в список. Если установлены опции фильтрации и сортировки 
  * - то располагает элменты на странице, в с-ии с ними
@@ -36,12 +40,21 @@
                 remindTime: remindTime
             }).validate();
 
-        ListOfEvents = ListOfEvents.add(element);
+        var result = ListOfEvents.add(element);
+        var data = result.serialise();
 
-        changeDocument("sort");
-        document.forms["form"].reset();
+        asyncXHR('POST','http://localhost:8080/current-event.json', function(error) {
 
-};
+          /*if (error === "error") {
+                alert("Не могу подключиться к северу. Попробуйте позже");
+                return;
+            }*/
+
+            ListOfEvents = result;
+            changeDocument("sort");
+            document.forms["form"].reset();
+        }, data);
+    };
 
     function filterEvents(listEvents) {
         switch (filterOption) {
@@ -190,7 +203,15 @@
         button.addEventListener('click', preventDefault);
     }
 
-    function restoreState(json) {
+    function restoreState(error, json) {
+
+        document.querySelector("#notify").style.visibility = 'hidden';
+
+        if (error === "error") {
+            document.querySelector("#notifyError").visibility = 'visible';
+            return;
+        }
+
         var parseObject = JSON.parse(json);
 
         for (var i=0; i < parseObject.length; i++) {
@@ -199,22 +220,7 @@
         };
 
         changeDocument("sort");
-    }
+        addListener();
+}
 
-    exports.initialise = function () {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:8080/current-event.json', true);
-        xhr.addEventListener('readystatechange', function () {
-            document.querySelector("#notify").style.visibility = 'hidden';
-
-            if (xhr.readyState === 4) {
-                restoreState(xhr.responseText);
-                addListener();
-            }
-            else {
-                document.querySelector("#notifyError").visibility = 'visible';
-            }
-        }, false);
-        xhr.send();
-    }
 }(window));

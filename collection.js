@@ -27,12 +27,6 @@ Collection.prototype.serialise = function () {
     return JSON.stringify(this.items);
 }
 
-Collection.prototype.sendCurrentState = function () {
-    var data = this.serialise();
-
-   // postFile('current-event.json', data, fucntion () {
-    //});
-}
 /**
  * Добавляет в коллекцию объект
  *

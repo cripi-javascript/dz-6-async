@@ -10,7 +10,7 @@
     document.body.addEventListener('load', initialise(), false);
 
     function initialise() {
-        asyncXHR('GET','http://localhost:8080/current-event.json', restoreState, null);
+        asyncXHR('GET','http://yunnii.github.com/dz-6-async/current-event.json', restoreState, null);
     }
 
     /**

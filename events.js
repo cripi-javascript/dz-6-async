@@ -124,7 +124,6 @@ Events.prototype.sortByTime = function (isAscending) {
                .byStartTime().reverse();
     }
     return this.byStartTime();
-            
 };
 
 /**

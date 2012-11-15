@@ -26,6 +26,13 @@
     exports.Event = function (data) {
 
         Model.apply(this, arguments);
+
+        if (typeof data.start !== undefined) {
+            this.start = new Date(this.start);
+        }
+        if (typeof data.end !== undefined) {
+            this.end = new Date(this.end);
+        }
     };
 
     inherits(Event, Model);

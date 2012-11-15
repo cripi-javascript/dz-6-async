@@ -58,12 +58,19 @@
     <div class="collection">
         <ul class="events"></ul>
     </div>
+    <div id="notify">
+        <label>Идет инициализация...<label>
+    </div>
+    <div id="notifyError">
+        <label>Попробуйте перезагрузить страницу чуть позже...<label>
+    </div>
+
     <script type="text/javascript" src="model.js"></script>
     <script type="text/javascript" src="collection.js"></script>
     <script type="text/javascript" src="event.js"></script>
     <script type="text/javascript" src="Events.js"></script>
     <script type="text/javascript" src="validation.js"></script>
     <script type="text/javascript" src="documentAction.js"></script>
-    <script type="text/javascript">addListener();</script>
+    <script type="text/javascript">initialise();</script>
 </body>
 </html>

@@ -18,6 +18,22 @@ exports.Collection = Collection;
 Collection.prototype.constructor = Collection;
 
 /**
+ * Сериализует коллекцию
+ *
+ * @return {JSON object} 
+ *
+ */
+Collection.prototype.serialise = function () {
+    return JSON.stringify(this.items);
+}
+
+Collection.prototype.sendCurrentState = function () {
+    var data = this.serialise();
+
+   // postFile('current-event.json', data, fucntion () {
+    //});
+}
+/**
  * Добавляет в коллекцию объект
  *
  * @param {object} model

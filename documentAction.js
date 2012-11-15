@@ -28,8 +28,8 @@
 
         var element = new Event({
                 name: name,
-                start: new Date(start),
-                end: new Date(end),
+                start: start,
+                end: end,
                 location: location,
                 raiting: raiting,
                 description: description,
@@ -40,6 +40,7 @@
 
         changeDocument("sort");
         document.forms["form"].reset();
+
 };
 
     function filterEvents(listEvents) {
@@ -149,7 +150,7 @@
 /**
  * Навешивает обработчики событий на страницу
 */
-    exports.addListener = function() {
+     function addListener() {
         var name = document.querySelector("#title");
         var start = document.querySelector("#from");
         var remindTime = document.querySelector("#remindTime");
@@ -187,5 +188,33 @@
         }
 
         button.addEventListener('click', preventDefault);
+    }
+
+    function restoreState(json) {
+        var parseObject = JSON.parse(json);
+
+        for (var i=0; i < parseObject.length; i++) {
+            var newEvent = new Event(parseObject[i]).validate();
+            ListOfEvents = ListOfEvents.add(newEvent);
+        };
+
+        changeDocument("sort");
+    }
+
+    exports.initialise = function () {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:8080/current-event.json', true);
+        xhr.addEventListener('readystatechange', function () {
+            document.querySelector("#notify").style.visibility = 'hidden';
+
+            if (xhr.readyState === 4) {
+                restoreState(xhr.responseText);
+                addListener();
+            }
+            else {
+                document.querySelector("#notifyError").visibility = 'visible';
+            }
+        }, false);
+        xhr.send();
     }
 }(window));

@@ -22,6 +22,12 @@
         this.cost =  0;
         this.parties = [];
         Model.call(this, data);
+        if (typeof data.start === "string") {
+            this.start = new Date(data.start);
+        }
+        if (typeof data.start === "string") {
+            this.end = new Date(data.end);
+        }
         this.validate(this);
         this.setLocation(this.location.gps, this.location.nameLocation);
         this.stars = this.leaveMark(this.stars);

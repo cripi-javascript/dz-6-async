@@ -23,9 +23,9 @@
             "parties" : document.querySelector("#NewEventPartiesList ol")
         };
         this.eventList = document.getElementById("eventList");
-        this.eventBase = initTestBase();
         this.errorManager = new CalendaryErrorManager("Error");
         this.currentFilters = [];
+        this.eventBase = new BaseEvent([]);
     }
     toExport.Calendary = Calendary;
 /**
@@ -51,7 +51,19 @@
     Calendary.prototype.SendChange = function () {
         var base = this.eventBase;
         var jsonBase = JSON.stringify(base);
-        return jsonBase;
+        ajaxXHR('post','base.json',jsonBase,  function (err, data) {
+            if (!err) {
+                var objEvents = JSON.parse(data).items, events = [];
+                for(var i = 0; i < objEvents.length; i += 1) {
+                    events.push(new Event(objEvents[i]));
+                }
+                currentCalendary.eventBase = new BaseEvent(events);
+                currentCalendary.UpdateShowList();
+            } else
+            {
+                console.log("Отправка произошла");
+            }
+        });
     }
 /**
  * @function - функция, загружает изменения с сервера.
@@ -59,9 +71,17 @@
  * @return {BaseEvent}
 */
     Calendary.prototype.LoadChange = function () {
-        var jsonBase = initTestBase();
-        var base = JSON.stringify(base);
-        return base;
+        var currentCalendary = this;
+        ajaxXHR('get','base.json', null, function (err, data) {
+            if (!err) {
+                var objEvents = JSON.parse(data).items, events = [];
+                for(var i = 0; i < objEvents.length; i += 1) {
+                    events.push(new Event(objEvents[i]));
+                }
+                currentCalendary.eventBase = new BaseEvent(events);
+                currentCalendary.UpdateShowList();
+            }
+        })
     }
 /**
  * @function - функция пытается создать событие из данных с формы

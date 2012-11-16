@@ -1,11 +1,11 @@
 /**
- * установим обработчики событий
+ * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
  *
  * @author Alex.Mangin
  */
 (function (){
     var calendary = new Calendary();
-   calendary.UpdateShowList();
+    calendary.LoadChange();
     calendary.EventFactory.timer.addEventListener('blur', function() {
         calendary.errorManager.changeTime(this);
     }, true);
@@ -38,6 +38,9 @@
     var sendChange = document.querySelector('#SaveMenu input[type = button]').addEventListener('click', function () {
         calendary.SendChange();
         });
+    var loadChange = document.querySelector('#LoadMenu input[type = button]').addEventListener('click', function () {
+        calendary.LoadChange();
+    });
     
     document.getElementById("FIlterFreshPeopleList").addEventListener('blur', function() {
         calendary.updateFilter();

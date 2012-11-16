@@ -44,6 +44,26 @@
         return base;
     }
 /**
+ * @function - функция, отправляет изменения календаря на сервер
+ *
+ * @return {BaseEvent}
+*/
+    Calendary.prototype.SendChange = function () {
+        var base = this.eventBase;
+        var jsonBase = JSON.stringify(base);
+        return jsonBase;
+    }
+/**
+ * @function - функция, загружает изменения с сервера.
+ *
+ * @return {BaseEvent}
+*/
+    Calendary.prototype.LoadChange = function () {
+        var jsonBase = initTestBase();
+        var base = JSON.stringify(base);
+        return base;
+    }
+/**
  * @function - функция пытается создать событие из данных с формы
 */
     Calendary.prototype.CreateEvent = function () {

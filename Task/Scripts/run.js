@@ -35,6 +35,10 @@
             calendary.UpdateShowList();
         })
     }
+    var sendChange = document.querySelector('#SaveMenu input[type = button]').addEventListener('click', function () {
+        calendary.SendChange();
+        });
+    
     document.getElementById("FIlterFreshPeopleList").addEventListener('blur', function() {
         calendary.updateFilter();
         calendary.UpdateShowList();

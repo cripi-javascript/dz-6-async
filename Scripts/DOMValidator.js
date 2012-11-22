@@ -81,7 +81,7 @@
         };
 
 /**
-* @field {Function} isTimeInterval - проверяет валидно ли поле содержащее промежуток времени
+* @field {Function} isImportantStringField - проверяет ввели ли в поле от {minSize} до {maxSize} - букв
 */
     DOMValidator.isImportantStringField = function (divWithImportantStringField, minSize, maxSize) {
             minSize = minSize || 0;
@@ -92,7 +92,7 @@
             if (minSize > maxSize) {
                 maxSize = -1;
             }
-            var importantStringField = divWithImportantStringField.querySelector(".ImportantStringField").value;
+            var importantStringField = divWithImportantStringField.querySelector(".ImportantStringField").value.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
             if (maxSize != -1) {
                 if (minSize > importantStringField.length || maxSize < importantStringField.length) {
                     return "Поле должно содержать от " + minSize + " до " + maxSize + "символов";

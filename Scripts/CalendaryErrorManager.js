@@ -45,7 +45,7 @@
  * @param {DOMdivElement} хранилище, содержащее важное поле.
 */
     CalendaryErrorManager.prototype.changeImportantStringField = function (importantStringField) {
-        var textError = DOMValidator.isImportantStringField(importantStringField, 5, 20);
+        var textError = DOMValidator.isImportantStringField(importantStringField, 1, 20);
         this.changeTextError(importantStringField, textError);
     }
 

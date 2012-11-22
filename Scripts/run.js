@@ -35,12 +35,6 @@
             calendary.UpdateShowList();
         })
     }
-    var sendChange = document.querySelector('#SaveMenu input[type = button]').addEventListener('click', function () {
-        calendary.SendChange();
-        });
-    var loadChange = document.querySelector('#LoadMenu input[type = button]').addEventListener('click', function () {
-        calendary.LoadChange();
-    });
     
     document.getElementById("FIlterFreshPeopleList").addEventListener('blur', function() {
         calendary.updateFilter();

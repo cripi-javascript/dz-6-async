@@ -44,21 +44,14 @@
         return base;
     }
 /**
- * @function - функция, отправляет изменения календаря на сервер
+ * @function - функция, отправляет изменения календаря на сервер, а именно, что пользователь добавил новое событие
  *
  * @return {BaseEvent}
 */
-    Calendary.prototype.SendChange = function () {
-        var base = this.eventBase;
-        var jsonBase = JSON.stringify(base);
-        ajaxXHR('post','base.json',jsonBase,  function (err, data) {
+    Calendary.prototype.SendChange = function (newEvent) {
+        var jsonBase = JSON.stringify(newEvent);
+        ajaxXHR('post','base.json',jsonBase,  function (err) {
             if (!err) {
-                var objEvents = JSON.parse(data).items, events = [];
-                for(var i = 0; i < objEvents.length; i += 1) {
-                    events.push(new Event(objEvents[i]));
-                }
-                currentCalendary.eventBase = new BaseEvent(events);
-                currentCalendary.UpdateShowList();
             } else
             {
                 console.log("Отправка произошла");
@@ -120,7 +113,7 @@
                     "x": parseFloat(this.EventFactory.coordinate.querySelector(" .XCoordinate").value),
                     "y":  parseFloat(this.EventFactory.coordinate.querySelector(" .YCoordinate").value)
                 },
-                "nameLocation": this.EventFactory.nameLocation.querySelector("input").value,
+                "nameLocation": this.EventFactory.nameLocation.querySelector("input").value.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
             },
             "stars" : parseFloat(this.EventFactory.stars.querySelector("input").value),
             "cost" :  parseFloat(this.EventFactory.cost.querySelector("input").value),
@@ -138,7 +131,9 @@
         if (DOMValidator.isPositiveNumber(this.EventFactory.cost)) {
             eventDate.cost = 0;
         }
-        this.eventBase = this.eventBase.add(new Event(eventDate));
+        var newEvent = new Event(eventDate);
+        this.SendChange(newEvent);
+        this.eventBase = this.eventBase.add(newEvent);
         inputs = document.querySelectorAll('#eventFactory input');
         for (i = 0; i < inputs.length; i = i + 1) {
             if (inputs[i].type === "text" || inputs[i].type === "date") {
@@ -160,6 +155,7 @@
         }
         this.EventFactory.parties.appendChild(docfrag);
     }
+
 /**
  * @function - функция обновляет отфильтрованный список со всеми наложенными фильтрами
 */

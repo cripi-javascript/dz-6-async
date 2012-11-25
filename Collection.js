@@ -7,6 +7,7 @@
 var Collection = function (items) {
     "use strict";
     this.items = [];
+    this.check = true;// флажок. равен false, если читаем сохраненные данные из файла. Иначе - true
     var keyName;
     for (keyName in items) {
         if (items.hasOwnProperty(keyName)) {
@@ -23,7 +24,9 @@ var Collection = function (items) {
 Collection.prototype.add = function (model) {
     "use strict";
     this.items.push(model);
-	this.sendCurrentState();
+    if (this.check === true) {
+        this.sendCurrentState();
+    }
 };
 
 /**
@@ -68,13 +71,14 @@ Collection.prototype.sortBy = function (fieldName) {
 };
 
 Collection.prototype.serialise = function () {// сериализует данные коллекции в JSON
+    "use strict";
     return JSON.stringify(this.items);
 };
 
 Collection.prototype.sendCurrentState = function (item) {
-
+    "use strict";
     var data = this.serialise();
 
     // POST запрос
-    asyncXHR('POST', 'http://IrinaGr.github.com/dz-6-async/current-event.json', data, function () {});
+    asyncXHR('POST', '/dz-6-async/current-event.json', data, function () {});
 };

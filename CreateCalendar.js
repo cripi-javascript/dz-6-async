@@ -3,26 +3,35 @@ var currentEvents = new Events();
 
 function asyncXHR(method, url, data, callback) {
     "use strict";
-	var xhr = new XMLHttpRequest();
-	xhr.open(method, url, true);
-	xhr.addEventListener('readystatechange', function () {
-	    if (xhr.readyState === 4) {
-		    if (xhr.status === 200) {
-			    callback(null, xhr.responseText);
-			} else {
-			    callback('error');
-			}
-		}
-	});
-	xhr.send(data);
+    var xhr = new XMLHttpRequest();
+    xhr.open(method, url, true);
+    xhr.addEventListener('readystatechange', function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                callback(null, xhr.responseText);
+            } else {
+                callback('error');
+            }
+        }
+    });
+    xhr.send(data);
 }
 
-asyncXHR('get', 'http://IrinaGr.github.com/dz-6-async/current-event.json', null, function (err, json) {
-        "use strict";
-        if (!err) {
-			var currentEvents = JSON.parse(json);
-			WriteCalendar();
-	    }
+asyncXHR('get', '/dz-6-async/current-event.json', null, function (err, json) {
+    "use strict";
+    if (!err) {
+        var newEvents = JSON.parse(json),
+            newEvent,
+            n = newEvents.length,
+            i;
+        currentEvents.check = false;
+        for (i = 0; i < n; i++) {
+            newEvent = new Event(newEvents[i]);
+            currentEvents.add(newEvent);
+        }
+        WriteCalendar();
+        currentEvents.check = true;
+    }
 });
 
 
@@ -105,5 +114,4 @@ var addListener = function () {
     for (i = 0; i < sort.length; i++) {
         sort[i].addEventListener('change', WriteCalendar);
     }
-	
 };

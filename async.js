@@ -1,13 +1,34 @@
-﻿var xhr = new XMLHttpRequest();
-// Подготавливаем запрос
-xhr.open('GET', 'test.json', true);
-// Подписываемся на событие "изменение статуса"
-xhr.addEventListener('readystatechange', function () {
-// Когда ответ пришел
-if (xhr.readyState === 4) {
-// Печатаем тело ответа
-console.log(xhr.responseText);
+﻿function asyncXHR(method, url, data, writeToFile) {
+    'use strict';
+    var xhr = new XMLHttpRequest();
+    xhr.open(method, url, true);
+    xhr.addEventListener('readystatechange', function () {
+   // console.log(xhr.status);
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+		        console.log(xhr.responseText);
+                writeToFile(xhr.responseText);
+            } else {
+                console.log("error: status != 200 ");
+            }
+        }
+    });
+    xhr.send(data);
 }
-}, false);
-// Отправляем запрос
-xhr.send();
+
+//var testEvent= new Event({"name": "Pewpe", "start": "11.12.2012", "end": "13.12.2012"});
+var coll = new Events();
+
+writeToFile = function (text) {
+    'use strict';
+// console.log("функция writetoFile");
+    var newEvents, key;
+    newEvents = JSON.parse(text);
+//	console.log("сейчас будет вывод объекта");
+//	console.log(newEvents.length);
+    for (key in newEvents) {
+        coll.add(newEvents[key]);
+	console.log(coll);
+        document.getElementById('contekst').innerHTML = text;
+    }
+}

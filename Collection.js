@@ -80,5 +80,5 @@ Collection.prototype.sendCurrentState = function (item) {
     var data = this.serialise();
 
     // POST запрос
-    asyncXHR('POST', '/dz-6-async/current-event.json', data, function () {});
+    asyncXHR('POST', 'current-event.json', data, function () {});
 };

@@ -12,7 +12,11 @@ var Model = function (data) {
     var keyName;
     for (keyName in data) {
         if (data.hasOwnProperty(keyName)) {
-            this[keyName] = data[keyName];
+            if (keyName === "start" || keyName === "end") {
+                this[keyName] = new Date(data[keyName]);
+            } else {
+                this[keyName] = data[keyName];
+            }
         }
     }
 };

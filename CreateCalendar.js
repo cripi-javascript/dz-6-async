@@ -10,14 +10,14 @@ function asyncXHR(method, url, data, callback) {
             if (xhr.status === 200) {
                 callback(null, xhr.responseText);
             } else {
-                callback('error');
+                callback(null, xhr.responseText);
             }
         }
     });
     xhr.send(data);
 }
 
-asyncXHR('get', '/dz-6-async/current-event.json', null, function (err, json) {
+asyncXHR('get', 'current-event.json', null, function (err, json) {
     "use strict";
     if (!err) {
         var newEvents = JSON.parse(json),
@@ -71,9 +71,9 @@ function WriteCalendar() {
 
 function CreateCalendar() {
     "use strict";
-    var s = (document.getElementsByName("start_date")[0]).value,// строка даты 
-        st = (document.getElementsByName("start_time")[0]).value, // строка времени
-        startEv = s + " " + st + ":00",
+    var date = (document.getElementsByName("start_date")[0]).value,// строка даты 
+        time = (document.getElementsByName("start_time")[0]).value, // строка времени
+        startEv = date + "T" + time + ":00",
         endEv,
         element,
         filterEvents = currentEvents,
@@ -82,13 +82,13 @@ function CreateCalendar() {
         bool,
         res;
 
-    s = (document.getElementsByName("end_date")[0]).value;
+    date = (document.getElementsByName("end_date")[0]).value;
     st = (document.getElementsByName("end_time")[0]).value;
-    endEv = s + " " + st + ":00";
+    endEv = date + "T" + time + ":00";
 
     element = new Event({
-        start: new Date(startEv),
-        end:  new Date(endEv),
+        start: startEv,
+        end:  endEv,
         name: (document.getElementsByName("New_Event")[0]).value,
         place: (document.getElementsByName("plase_event")[0]).value,
         rating: parseFloat((document.getElementsByName("rating_event")[0]).value[0]),

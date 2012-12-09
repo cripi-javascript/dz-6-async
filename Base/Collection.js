@@ -79,5 +79,5 @@ Collection.prototype.sendCurrentState = function () {
     "use strict"
 
     var data = this.serialise();
-    postFile('http://zhigalov.github.com/dz-6-async/current-event.json', data, callback);
+    postFile('current-event.json', data, callback);
 };

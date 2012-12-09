@@ -25,6 +25,7 @@ Collection.prototype.add = function (model) {
 
     var result = new this.constructor(this.items);
     result.items.push(model);
+    result.sendCurrentState();
     return result;
 };
 
@@ -68,4 +69,15 @@ Collection.prototype.sortBy = function (fieldName) {
         return 0;
     });
     return result;
+};
+
+Collection.prototype.serialise = function () {
+    return JSON.stringify(this.items);
+};
+
+Collection.prototype.sendCurrentState = function () {
+    "use strict"
+
+    var data = this.serialise();
+    postFile('http://zhigalov.github.com/dz-6-async/current-event.json', data, callback);
 };

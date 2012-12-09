@@ -14,20 +14,11 @@
 * @see EventTime
 */
 
-var Event = function (name, address, time, member, raiting) {
+var Event = function (event) {
     "use strict";
 
     Model.call(this);
-    var myTime = time || new EventTime(new Date(), new Date());
-
-    this.set({
-        name: name || "Событие",
-        address: address || "",
-        timeStart: myTime.start,
-        timeEnd: myTime.end,
-        member: member || [],
-        raiting: +raiting || 3
-    });
+    this.set(event);
 }
 
 inherits(Event, Model);
@@ -64,7 +55,7 @@ Event.prototype.validate = function () {
     "use strict";
 
     var errors = [];
-    if (this.get("timeStart") < this.get("timeEnd")) {
+    if (this.get("timeStart") > this.get("timeEnd")) {
         errors.push("Время начала события больше чем время конца");
     }
     if (this.get("raiting") < 0) {

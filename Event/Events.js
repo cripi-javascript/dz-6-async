@@ -19,7 +19,7 @@ Events.prototype.findPastEvents = function () {
     "use strict";
 
     return this.filter(function (event) {
-        return event.get("timeStart") < new Date().getTime();
+        return new Date(event.get("timeStart")) < new Date();
     });
 };
 
@@ -32,7 +32,7 @@ Events.prototype.findFutureEvents = function () {
     "use strict";
 
     return this.filter(function (event) {
-        return event.get("timeStart") > new Date().getTime();
+        return new Date(event.get("timeStart")) > new Date();
     });
 };
 
@@ -81,7 +81,7 @@ Events.prototype.findEventsHappendLaterTime = function (time) {
     "use strict";
 
     return this.filter(function (event) {
-        return event.get("timeStart") > time;
+        return new Date(event.get("timeStart")) > time;
     });
 };
 
@@ -96,7 +96,22 @@ Events.prototype.findEventsHappendBeforeTime = function (time) {
     "use strict";
 
     return this.filter(function (event) {
-        return event.get("timeStart") < time;
+        return new Date(event.get("timeStart")) < time;
+    });
+};
+
+/**
+ * События, с рейтингом больше (или равного) переданному
+ *
+ * @param raiting Рейтинг
+ *
+ * @return {Events}
+ */
+Events.prototype.findEventsWithRaitingMore = function (raiting) {
+    "use strict";
+
+    return this.filter(function (event) {
+        return event.get("raiting") >= raiting;
     });
 };
 

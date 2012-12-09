@@ -71,13 +71,22 @@ Collection.prototype.sortBy = function (fieldName) {
     return result;
 };
 
+/**
+ * Сериализация коллекции в формат JSON
+ */
 Collection.prototype.serialise = function () {
+    "use strict"
+
     return JSON.stringify(this.items);
 };
 
+/**
+ * Сохранение коллекции
+ */
 Collection.prototype.sendCurrentState = function () {
     "use strict"
 
     var data = this.serialise();
-    postFile('current-event.json', data, callback);
+    console.log(data);
+    postFile("current-event.json", data, callback);
 };

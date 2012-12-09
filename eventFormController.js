@@ -13,15 +13,15 @@ function onSubmitEventForm() {
     "use strict";
 
     try {
-        var event = ParseEventForm();
+        var event = parseEventForm();
         var errors = event.validate();
         if (errors.length == 0) {
-            ResetEventForm();
+            resetEventForm();
             myEvents = myEvents.add(event);
-            RePaintEvents(myEvents);
+            rePaintEvents(myEvents);
         }
         else {
-            SetErrorMessage("Невозможно добавить событие, содержатся следующие ошибки:" + errors);
+            setErrorMessage("Невозможно добавить событие, содержатся следующие ошибки:" + errors);
         }
     } catch (e) {
         console.log(e.message);
@@ -44,14 +44,14 @@ function loadEvents() {
             .map(function (event) {
                 return new Event(event);
             });
-        RePaintEvents(myEvents);
+        rePaintEvents(myEvents);
     });
 }
 
 /**
  * Сортировка и фильтрация списка сохраненных событий и их перерисовка
  */
-function ShowEventList() {
+function showEventList() {
     "use strict";
 
     var sortSelector = document.getElementById("eventSortType");
@@ -73,19 +73,19 @@ function ShowEventList() {
     var raiting = document.getElementById("raitingMore").value;
     events = events.findEventsWithRaitingMore(raiting);
 
-    RePaintEvents(events);
+    rePaintEvents(events);
 }
 
 /**
  * Очитка формы от введенных данных
  */
-function ResetEventForm () {
+function resetEventForm () {
     "use strict";
 
     var form = document.getElementById("eventForm");
     form.reset();
-    DeleteMembers();
-    SetErrorMessage("");
+    deleteMembers();
+    setErrorMessage("");
 }
 
 /**
@@ -93,7 +93,7 @@ function ResetEventForm () {
  * 
  * @return {Object|Event} Событие
  */
-function ParseEventForm() {
+function parseEventForm() {
     "use strict";
 
     var name = document.getElementById("eventName").value;
@@ -130,7 +130,7 @@ function ParseEventForm() {
  * 
  * @param events список событий для отрисовки
  */
-function RePaintEvents(events) {
+function rePaintEvents(events) {
     "use strict";
 
     var oldContainer = document.getElementById("myEvents");
@@ -139,7 +139,7 @@ function RePaintEvents(events) {
     newContainer.id = "myEvents";
 
     events.items
-        .map(EventHtml)
+        .map(eventHtml)
         .map(function (event) {
             newContainer.innerHTML += event;
         });
@@ -152,7 +152,7 @@ function RePaintEvents(events) {
  *
  * @return {String} html представление события
  */
-function EventHtml(event) {
+function eventHtml(event) {
     "use strict";
 
     var i, stars = "";
@@ -174,7 +174,7 @@ function EventHtml(event) {
 /**
  * Добавление участника события при нажатии на плюсик
  */
-function AddMember() {
+function addMember() {
     "use strict";
 
     var member = document.getElementById("eventMember").value;
@@ -183,7 +183,7 @@ function AddMember() {
             "<div>" +
                 "<span class='inputTitle'>&nbsp;</span>" +
                 "<span class='memberItem'>" + member +"</span>" +
-                "<img src='images/delete.jpg' alt='Удалить элемент' height='20' align='top' onclick='DeleteMember(this);'>" +
+                "<img src='images/delete.jpg' alt='Удалить элемент' height='20' align='top' onclick='deleteMember(this);'>" +
             "</div>";
 
         var membersContainer = document.getElementById("eventMembers");
@@ -194,7 +194,7 @@ function AddMember() {
 /**
  * Удаление учатника события из отображаемого списка при нажатии на крестик
  */
-function DeleteMember(deleteButton) {
+function deleteMember(deleteButton) {
     "use strict";
 
     var memberContainer = deleteButton.parentNode;
@@ -204,7 +204,7 @@ function DeleteMember(deleteButton) {
 /**
  * Удаление всех участников события
  */
-function DeleteMembers() {
+function deleteMembers() {
     "use strict";
 
     var i, membersHTML = document.querySelectorAll(".memberItem");
@@ -219,7 +219,7 @@ function DeleteMembers() {
  *
  * @param message сообщение об ошибке в форме
  */
-function SetErrorMessage(message) {
+function setErrorMessage(message) {
     "use strict";
 
     var errorContainer = document.getElementById("errorInForm");
